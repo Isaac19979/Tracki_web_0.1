@@ -1,0 +1,174 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+
+  h1 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+}
+
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.add {
+  display: flex;
+  gap: 8px;
+
+  input {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .add {
+    flex-wrap: wrap;
+
+    input {
+      flex-basis: 100%;
+    }
+
+    select {
+      flex: 1;
+    }
+  }
+
+  .user span {
+    display: none;
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+h2 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+
+  .muted {
+    font-weight: 400;
+    font-size: 0.9rem;
+  }
+}
+
+.habit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 0.15s;
+
+  &.done {
+    border-color: var(--success);
+
+    .title {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+  }
+}
+
+.check {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: transparent;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+
+  .done & {
+    background: var(--success);
+    border-color: var(--success);
+  }
+}
+
+.title,
+.edit {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.streak {
+  flex: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--streak-bg);
+  color: var(--streak);
+
+  &.zero {
+    background: var(--chip);
+    color: var(--muted);
+  }
+}
+
+.icon {
+  flex: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  opacity: 0.55;
+
+  &:hover {
+    opacity: 1;
+    background: var(--chip);
+  }
+}
+
+.empty {
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.error {
+  margin: 0;
+  color: var(--danger);
+}
+
+.center {
+  text-align: center;
+}

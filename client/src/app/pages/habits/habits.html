@@ -1,0 +1,77 @@
+<header class="topbar">
+  <h1>🔥 Mis Hábitos</h1>
+  <div class="user">
+    <span class="muted">{{ user()?.displayName || user()?.email }}</span>
+    <button type="button" class="btn" (click)="logout()">Salir</button>
+  </div>
+</header>
+
+<main class="content">
+  <form class="add" (ngSubmit)="add()">
+    <input
+      name="title"
+      [(ngModel)]="newTitle"
+      placeholder="Nuevo hábito, p. ej. Leer 20 minutos"
+      maxlength="120"
+      aria-label="Nombre del hábito"
+    />
+    <select name="frequency" [(ngModel)]="newFrequency" aria-label="Frecuencia">
+      <option value="daily">Diario</option>
+      <option value="weekly">Semanal</option>
+      <option value="monthly">Mensual</option>
+    </select>
+    <button type="submit" class="btn primary" [disabled]="!newTitle.trim()">Añadir</button>
+  </form>
+
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="muted center">Cargando…</p>
+  } @else {
+    @for (section of sections(); track section.frequency) {
+      <section>
+        <h2>{{ section.title }} <span class="muted">· {{ section.period }}</span></h2>
+
+        @for (habit of section.habits; track habit.id) {
+          <article class="habit" [class.done]="habit.doneThisPeriod">
+            <button
+              type="button"
+              class="check"
+              (click)="toggle(habit)"
+              [attr.aria-pressed]="habit.doneThisPeriod"
+              [attr.aria-label]="(habit.doneThisPeriod ? 'Desmarcar ' : 'Marcar ') + habit.title"
+            >
+              @if (habit.doneThisPeriod) { ✓ }
+            </button>
+
+            @if (editingId() === habit.id) {
+              <input
+                #editInput
+                class="edit"
+                [value]="habit.title"
+                maxlength="120"
+                (keydown.enter)="saveEdit(habit, editInput.value)"
+                (keydown.escape)="editingId.set(null)"
+                (blur)="saveEdit(habit, editInput.value)"
+                aria-label="Editar nombre"
+              />
+            } @else {
+              <span class="title">{{ habit.title }}</span>
+            }
+
+            <span class="streak" [class.zero]="habit.streak === 0" title="Racha actual">
+              🔥 {{ streakLabel(habit.streak, section.unit) }}
+            </span>
+
+            <button type="button" class="icon" (click)="startEdit(habit)" aria-label="Editar">✏️</button>
+            <button type="button" class="icon" (click)="remove(habit)" aria-label="Eliminar">🗑️</button>
+          </article>
+        } @empty {
+          <p class="empty muted">Sin hábitos {{ section.title.toLowerCase() }} todavía.</p>
+        }
+      </section>
+    }
+  }
+</main>

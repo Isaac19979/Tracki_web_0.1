@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm *)",
+      "PowerShell(npx tsc --noEmit; \"exit: $LASTEXITCODE\")",
+      "PowerShell(foreach \\($v in '21','22','23'\\) { \"$v -> \" + \\(npm view \"@angular/cli@$v\" engines.node 2>$null | Select-Object -Last 1\\) })",
+      "PowerShell(npx -y @angular/cli@21 new client --style=scss --routing --ssr=false --skip-git --skip-tests --defaults --interactive=false 2>&1 | Select-Object -Last 10)",
+      "PowerShell(Remove-Item *)"
+    ]
+  }
+}
